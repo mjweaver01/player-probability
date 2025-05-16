@@ -1,10 +1,7 @@
 import { z } from "zod";
-import { Router } from "express";
 import { zodTextFormat } from "openai/helpers/zod";
-import { client, model } from "./openai.js";
-import { getAthleteImage } from "./athlete.js";
-
-const router = Router();
+import { client, model } from "./openai";
+import { getAthleteImage } from "./athlete";
 
 const ForecastProbability = z.object({
   player: z.string(),
@@ -15,9 +12,9 @@ const ForecastProbability = z.object({
   explanation: z.string(),
 });
 
-const forecastProbability = async (res: any, playerName?: string) => {
+export const forecastProbability = async (playerName?: string) => {
   if (!playerName) {
-    return res.status(400).json({ error: "Player name is required" });
+    return { error: "Player name is required" };
   }
 
   const { image } = await getAthleteImage(playerName);
@@ -77,21 +74,9 @@ const forecastProbability = async (res: any, playerName?: string) => {
       };
     }
 
-    res.json(forecast);
+    return forecast;
   } catch (error) {
     console.error("OpenAI API Error:", error);
-    res.status(500).json({ error: "An error occurred while processing the request" });
+    return { error: "An error occurred while processing the request" };
   }
 };
-
-router.post("/", async (req, res) => {
-  const { playerName } = req.body;
-  return await forecastProbability(res, playerName);
-});
-
-router.get("/", async (req, res) => {
-  const { playerName } = req.query;
-  return await forecastProbability(res, playerName as string);
-});
-
-export default router;

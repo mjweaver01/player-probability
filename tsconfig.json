@@ -10,5 +10,5 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "server/athlete.ts", "server/index.ts", "server/probability.ts", "server/openai.ts"]
 }

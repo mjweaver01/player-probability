@@ -7,24 +7,58 @@ Forecast the probability of a player appearing in their next game.
 1. Create a `.env` file in the root directory with the following content:
    ```
    OPENAI_API_KEY=your_openai_api_key_here
-   PORT=3000
+   OPENAI_MODEL=gpt-4o-mini
    ```
 
 2. Replace `your_openai_api_key_here` with your actual OpenAI API key.
 
 3. Install dependencies:
    ```
-   yarn install
+   npm install
    ```
 
-4. Run the development server:
+4. Run the development server with Netlify CLI:
    ```
-   yarn dev
+   npm run dev
    ```
+
+## Deployment
+
+This project is set up to be deployed on Netlify:
+
+1. Install Netlify CLI globally (if not already installed):
+   ```
+   npm install -g netlify-cli
+   ```
+
+2. Log in to Netlify:
+   ```
+   netlify login
+   ```
+
+3. Link your repository to a Netlify site:
+   ```
+   netlify init
+   ```
+
+4. Deploy to Netlify:
+   ```
+   netlify deploy --prod
+   ```
+
+5. Set environment variables in the Netlify dashboard:
+   - OPENAI_API_KEY
+   - OPENAI_MODEL
 
 ## Usage
 
-### POST
+### Frontend
+
+Visit the application in your browser at http://localhost:8888 when running locally, or at your Netlify URL after deployment.
+
+### API
+
+#### POST
 
 Send a POST request to `/api/probability` with a JSON body containing the player name:
 
@@ -34,7 +68,7 @@ Send a POST request to `/api/probability` with a JSON body containing the player
 }
 ```
 
-### GET
+#### GET
 
 Send a GET request to `/api/probability` with the playerName as a query parameter:
 
@@ -43,3 +77,10 @@ api/probability?playerName=LeBron%20James
 ```
 
 The service will return a forecast with the probability of the player appearing in their next game, confidence, and an explanation.
+
+## Project Structure
+
+- `/netlify/functions`: Serverless functions deployed to Netlify
+- `index.html`: Main entry point for the Vite application
+- `netlify.toml`: Netlify configuration file
+- `vite.config.js`: Vite configuration
