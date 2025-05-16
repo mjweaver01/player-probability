@@ -23,12 +23,15 @@
                         placeholder="Enter player name (e.g., LeBron James)" 
                         @keyup.enter="getPlayerProbability"
                         class="flex-grow px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"
+                        :disabled="loading"
                     >
                     <button 
                         @click="getPlayerProbability"
                         class="px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center"
+                        :disabled="loading"
                     >
-                        <span>Get Probability</span>
+                        <span v-if="!loading">Get Probability</span>
+                        <span v-else>Loading...</span>
                     </button>
                 </div>
             </div>
@@ -95,62 +98,53 @@
         </div>
 
         <script>
-            const { createApp, ref, computed } = Vue;
-            
-            createApp({
-                setup() {
-                    const playerName = ref('');
-                    const loading = ref(false);
-                    const showResults = ref(false);
-                    const result = ref({});
-                    
-                    const formattedProbability = computed(() => {
-                        return typeof result.value.probability === 'number' 
-                            ? `${(result.value.probability * 100).toFixed(1)}%` 
+            const app = Vue.createApp({
+                data() {
+                    return {
+                        playerName: '',
+                        loading: false,
+                        showResults: false,
+                        result: {}
+                    };
+                },
+                computed: {
+                    formattedProbability() {
+                        return typeof this.result.probability === 'number' 
+                            ? `${(this.result.probability * 100).toFixed(1)}%` 
                             : 'Unknown';
-                    });
-                    
-                    const formattedConfidence = computed(() => {
-                        return typeof result.value.confidence === 'number' 
-                            ? `${(result.value.confidence * 100).toFixed(1)}%` 
+                    },
+                    formattedConfidence() {
+                        return typeof this.result.confidence === 'number' 
+                            ? `${(this.result.confidence * 100).toFixed(1)}%` 
                             : 'Unknown';
-                    });
-                    
-                    const getPlayerProbability = async () => {
-                        if (!playerName.value.trim()) {
+                    }
+                },
+                methods: {
+                    async getPlayerProbability() {
+                        if (!this.playerName.trim()) {
                             alert('Please enter a player name');
                             return;
                         }
                         
-                        loading.value = true;
-                        showResults.value = false;
+                        this.loading = true;
+                        this.showResults = false;
                         
                         try {
-                            const response = await fetch('/api/probability?playerName=' + encodeURIComponent(playerName.value.trim()));
+                            const response = await fetch('/api/probability?playerName=' + encodeURIComponent(this.playerName.trim()));
                             
                             if (!response.ok) {
                                 throw new Error('Network response was not ok');
                             }
                             
-                            result.value = await response.json();
-                            showResults.value = true;
+                            this.result = await response.json();
+                            this.showResults = true;
                         } catch (error) {
                             console.error('Error:', error);
                             alert('Error fetching data. Please try again.');
                         } finally {
-                            loading.value = false;
+                            this.loading = false;
                         }
-                    };
-                    
-                    return {
-                        playerName,
-                        loading,
-                        showResults,
-                        result,
-                        formattedProbability,
-                        formattedConfidence,
-                        getPlayerProbability
-                    };
+                    }
                 }
             }).mount('#app');
         </script>
