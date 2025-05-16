@@ -2,11 +2,13 @@ import { z } from "zod";
 import { Router } from "express";
 import { zodTextFormat } from "openai/helpers/zod";
 import { client, model } from "./openai.js";
+import { getPlayerImage } from "./athlete.js";
 
 const router = Router();
 
 const ForecastProbability = z.object({
   player: z.string(),
+  image: z.string(),
   probability: z.number(),
   confidence: z.number(),
   nextGame: z.string(),
@@ -18,17 +20,23 @@ const forecastProbability = async (res: any, playerName?: string) => {
     return res.status(400).json({ error: "Player name is required" });
   }
 
+  const { image } = await getPlayerImage(playerName);
+
   try {
     const prompt = `
     **Identity**
     You are a sports analyst that is tasked with determining the probability of a player appearing in their next game.
 
+    **Context**
+    Today's Date: ${new Date().toISOString().split('T')[0]}
     Player: ${playerName}
+    Player's Image: ${image}
 
     **Instructions**
     - You are given a player's name and you do web search on them to determine the probability of them appearing in their next game.
     - You are to provide a JSON object with the following fields:
       - player: The player's name.
+      - image: The player's image.
       - probability: The probability of the player appearing in their next game.
       - confidence: The confidence in the probability.
       - nextGame: The next game the player will be playing in.
