@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node dist/index.js",
     "build": "tsc",
-    "dev": "node --inspect --import tsx src/index.ts"
+    "dev": "tsx watch --inspect src/index.ts"
   },
   "dependencies": {
     "axios": "^1.4.0",
