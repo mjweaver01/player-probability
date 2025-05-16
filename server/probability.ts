@@ -5,6 +5,7 @@ import { getAthleteImage } from "./athlete";
 
 const ForecastProbability = z.object({
   player: z.string(),
+  team: z.string(),
   image: z.string(),
   probability: z.number(),
   confidence: z.number(),
@@ -38,6 +39,7 @@ export const forecastProbability = async (playerName?: string) => {
     **Output**
     - You are to provide a JSON object with the following fields:
       - player: The player's name.
+      - team: The player's team.
       - image: The player's image.
       - probability: The probability of the player appearing in their next game.
       - confidence: The confidence in the probability.
@@ -64,6 +66,7 @@ export const forecastProbability = async (playerName?: string) => {
         ? JSON.parse(response.output_text.replace(/[\u0000-\u001F\u007F-\u009F]/g, "")) 
         : {
           player: playerName,
+          team: "No team available",
           image: image || "",
           probability: 0,
           confidence: 0,
@@ -74,6 +77,7 @@ export const forecastProbability = async (playerName?: string) => {
       console.error("JSON Parse Error:", jsonError);
       forecast = {
         player: playerName,
+        team: "No team available",
         image: image || "",
         probability: 0,
         confidence: 0,

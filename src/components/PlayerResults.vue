@@ -2,7 +2,7 @@
   <div class="transition-all duration-300">
     <div class="bg-white rounded-xl overflow-hidden shadow-lg">
       <div class="bg-gradient-to-r from-indigo-600 to-blue-500 p-6 text-white">
-        <h2 class="text-2xl font-bold">{{ result.player || playerName }}</h2>
+        <h2 class="text-2xl font-bold flex align-center justify-between">{{ result.player || playerName }}<span class="text-right" v-html="parsedTeam"></span></h2>
         <p class="opacity-90" v-if="result.nextGame">
           <span v-html="parsedNextGame"></span>
         </p>
@@ -106,11 +106,16 @@ export default defineComponent({
       props.result.nextGame ? marked.parse(props.result.nextGame) : 'Unknown'
     );
 
+    const parsedTeam = computed(() =>   
+      props.result.team ? marked.parse(props.result.team) : 'Unknown'
+    );
+
     return {
       formattedProbability,
       formattedConfidence,
       parsedExplanation,
-      parsedNextGame
+      parsedNextGame,
+      parsedTeam
     };
   }
 });
