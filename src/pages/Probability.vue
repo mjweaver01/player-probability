@@ -4,18 +4,15 @@
       <h1 class="text-4xl font-bold text-indigo-800 mb-2">Player Probability</h1>
       <p class="text-gray-600">Predict player appearance probability for upcoming games</p>
     </div>
-    
-    <PlayerSearch 
-      :loading="loading" 
-      @search="getPlayerProbability" 
-    />
-    
+
+    <PlayerSearch :loading="loading" @search="getPlayerProbability" />
+
     <LoadingSpinner v-if="loading" />
-    
-    <PlayerResults 
-      v-if="showResults" 
-      :result="result" 
-      :player-name="playerName" 
+
+    <PlayerResults
+      v-if="showResults"
+      :result="result"
+      :player-name="playerName"
       :last-updated="lastUpdated"
       @clear="clearData"
     />
@@ -34,7 +31,7 @@ export default defineComponent({
   components: {
     PlayerSearch,
     LoadingSpinner,
-    PlayerResults
+    PlayerResults,
   },
   setup() {
     const playerName: Ref<string> = ref('');
@@ -47,18 +44,20 @@ export default defineComponent({
       playerName.value = name;
       loading.value = true;
       showResults.value = false;
-      
+
       try {
-        const response = await fetch('/.netlify/functions/probability?playerName=' + encodeURIComponent(name));
-        
+        const response = await fetch(
+          '/.netlify/functions/probability?playerName=' + encodeURIComponent(name)
+        );
+
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        
+
         result.value = await response.json();
         lastUpdated.value = new Date().toLocaleString();
         showResults.value = true;
-        
+
         // Save to local storage - Both current search and history
         saveToLocalStorage();
         saveToHistory();
@@ -75,7 +74,7 @@ export default defineComponent({
         playerName: playerName.value,
         result: result.value,
         showResults: showResults.value,
-        lastUpdated: lastUpdated.value
+        lastUpdated: lastUpdated.value,
       };
       localStorage.setItem('playerProbabilityData', JSON.stringify(dataToSave));
     };
@@ -83,19 +82,17 @@ export default defineComponent({
     const saveToHistory = (): void => {
       // Get existing history or initialize empty array
       const historyData = JSON.parse(localStorage.getItem('playerProbabilityHistory') || '[]');
-      
+
       // Add current search to history
       historyData.push({
         id: Date.now(),
         playerName: playerName.value,
         result: result.value,
-        timestamp: lastUpdated.value
+        timestamp: lastUpdated.value,
       });
-      
+
       // Store in localStorage (keep the last 10 searches)
-      localStorage.setItem('playerProbabilityHistory', JSON.stringify(
-        historyData.slice(-10)
-      ));
+      localStorage.setItem('playerProbabilityHistory', JSON.stringify(historyData.slice(-10)));
     };
 
     const loadFromLocalStorage = (): void => {
@@ -127,8 +124,8 @@ export default defineComponent({
       result,
       lastUpdated,
       getPlayerProbability,
-      clearData
+      clearData,
     };
-  }
+  },
 });
-</script> 
+</script>

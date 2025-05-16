@@ -19,4 +19,4 @@ export interface SavedData {
   result: PlayerResult;
   showResults: boolean;
   lastUpdated: string;
-} 
+}

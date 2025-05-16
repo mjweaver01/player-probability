@@ -1,23 +1,23 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Probability from './pages/Probability.vue'
-import History from './pages/History.vue'
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import Probability from './pages/Probability.vue';
+import History from './pages/History.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Probability',
-    component: Probability
+    component: Probability,
   },
   {
     path: '/history',
     name: 'History',
-    component: History
-  }
-]
+    component: History,
+  },
+];
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
-})
+  routes,
+});
 
-export default router 
+export default router;

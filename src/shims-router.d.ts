@@ -1,6 +1,6 @@
 declare module 'vue-router' {
-  import type { DefineComponent } from 'vue'
-  
+  import type { DefineComponent } from 'vue';
+
   export interface RouteRecordRaw {
     path: string;
     name?: string;
@@ -12,7 +12,7 @@ declare module 'vue-router' {
     children?: RouteRecordRaw[];
     props?: boolean | Object | Function;
   }
-  
+
   export function createRouter(options: any): any;
   export function createWebHistory(base?: string): any;
-} 
+}
