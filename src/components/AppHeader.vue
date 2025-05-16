@@ -2,7 +2,7 @@
   <header class="bg-indigo-800 text-white shadow-md">
     <div class="mx-auto px-4 py-3">
       <div class="flex justify-between items-center">
-        <div class="font-bold text-xl">Player Probability</div>
+        <div class="font-bold text-xl">Will They Appear?</div>
         
         <nav class="flex space-x-4">
           <router-link 

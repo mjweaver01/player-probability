@@ -2,7 +2,7 @@
   <div>
     <div class="text-center mb-10">
       <h1 class="text-4xl font-bold text-indigo-800 mb-2">Search History</h1>
-      <p class="text-gray-600">Your previous player probability forecasts</p>
+      <p class="text-gray-600">Your previous player forecasts</p>
     </div>
     
     <div v-if="history.length === 0" class="bg-white rounded-lg shadow-md p-10 text-center">

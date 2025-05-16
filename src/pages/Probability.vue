@@ -2,7 +2,7 @@
   <div>
     <div class="text-center mb-10">
       <h1 class="text-4xl font-bold text-indigo-800 mb-2">Player Probability</h1>
-      <p class="text-gray-600">Predict player performance for upcoming games</p>
+      <p class="text-gray-600">Predict player appearance probability for upcoming games</p>
     </div>
     
     <PlayerSearch 
