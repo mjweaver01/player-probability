@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import probabilityRouter from "./probability";
+import probabilityRouter from "./probability.js";
 
 dotenv.config();
 
