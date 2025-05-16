@@ -21,8 +21,10 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
   name: 'PlayerSearch',
   props: {
     loading: {
@@ -30,19 +32,21 @@ export default {
       default: false
     }
   },
-  data() {
-    return {
-      playerName: ''
-    }
-  },
-  methods: {
-    searchPlayer() {
-      if (!this.playerName.trim()) {
-        alert('Please enter a player name');
-        return;
+  setup(props, { emit }) {
+    const playerName = ref('')
+
+    const searchPlayer = () => {
+      if (!playerName.value.trim()) {
+        alert('Please enter a player name')
+        return
       }
-      this.$emit('search', this.playerName.trim());
+      emit('search', playerName.value.trim())
+    }
+
+    return {
+      playerName,
+      searchPlayer
     }
   }
-}
+})
 </script> 

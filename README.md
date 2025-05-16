@@ -54,13 +54,13 @@ This project is set up to be deployed on Netlify:
 
 ### Frontend
 
-Visit the application in your browser at http://localhost:8888 when running locally, or at your Netlify URL after deployment.
+Visit the application in your browser at http://localhost:1234 when running locally, or at your Netlify URL after deployment.
 
 ### API
 
 #### POST
 
-Send a POST request to `/api/probability` with a JSON body containing the player name:
+Send a POST request to `/.netlify/functions/probability` with a JSON body containing the player name:
 
 ```json
 {
@@ -70,10 +70,10 @@ Send a POST request to `/api/probability` with a JSON body containing the player
 
 #### GET
 
-Send a GET request to `/api/probability` with the playerName as a query parameter:
+Send a GET request to `/.netlify/functions/probability` with the playerName as a query parameter:
 
 ```
-api/probability?playerName=LeBron%20James
+/.netlify/functions/probability?playerName=LeBron%20James
 ```
 
 The service will return a forecast with the probability of the player appearing in their next game, confidence, and an explanation.

@@ -64,14 +64,16 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, computed, PropType } from 'vue';
 import { marked } from 'marked';
+import { PlayerResult } from '../types';
 
-export default {
+export default defineComponent({
   name: 'PlayerResults',
   props: {
     result: {
-      type: Object,
+      type: Object as PropType<PlayerResult>,
       required: true
     },
     playerName: {
@@ -83,23 +85,33 @@ export default {
       default: ''
     }
   },
-  computed: {
-    formattedProbability() {
-      return typeof this.result.probability === 'number' 
-        ? `${(this.result.probability * 100).toFixed(1)}%` 
-        : 'Unknown';
-    },
-    formattedConfidence() {
-      return typeof this.result.confidence === 'number' 
-        ? `${(this.result.confidence * 100).toFixed(1)}%` 
-        : 'Unknown';
-    },
-    parsedExplanation() {
-      return this.result.explanation ? marked.parse(this.result.explanation) : 'No explanation available';
-    },
-    parsedNextGame() {
-      return this.result.nextGame ? marked.parse(this.result.nextGame) : 'Unknown';
-    }
+  setup(props, { emit }) {
+    const formattedProbability = computed(() => 
+      typeof props.result.probability === 'number' 
+        ? `${(props.result.probability * 100).toFixed(1)}%` 
+        : 'Unknown'
+    );
+    
+    const formattedConfidence = computed(() => 
+      typeof props.result.confidence === 'number' 
+        ? `${(props.result.confidence * 100).toFixed(1)}%` 
+        : 'Unknown'
+    );
+    
+    const parsedExplanation = computed(() => 
+      props.result.explanation ? marked.parse(props.result.explanation) : 'No explanation available'
+    );
+    
+    const parsedNextGame = computed(() => 
+      props.result.nextGame ? marked.parse(props.result.nextGame) : 'Unknown'
+    );
+
+    return {
+      formattedProbability,
+      formattedConfidence,
+      parsedExplanation,
+      parsedNextGame
+    };
   }
-}
+});
 </script> 
