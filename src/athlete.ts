@@ -7,7 +7,7 @@ const AthleteImage = z.object({
   image: z.string(),
 });
 
-export const getPlayerImage = async (playerName: string) => {
+export const getAthleteImage = async (playerName: string) => {
   try {
     const prompt = `
     **Identity**

@@ -2,7 +2,7 @@ import { z } from "zod";
 import { Router } from "express";
 import { zodTextFormat } from "openai/helpers/zod";
 import { client, model } from "./openai.js";
-import { getPlayerImage } from "./athlete.js";
+import { getAthleteImage } from "./athlete.js";
 
 const router = Router();
 
@@ -20,7 +20,7 @@ const forecastProbability = async (res: any, playerName?: string) => {
     return res.status(400).json({ error: "Player name is required" });
   }
 
-  const { image } = await getPlayerImage(playerName);
+  const { image } = await getAthleteImage(playerName);
 
   try {
     const prompt = `
