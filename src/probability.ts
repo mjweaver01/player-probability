@@ -53,15 +53,29 @@ const forecastProbability = async (res: any, playerName?: string) => {
       },
     });
 
-    const forecast = response.output_text 
-      ? JSON.parse(response.output_text) 
-      : {
+    let forecast;
+    try {
+      forecast = response.output_text 
+        ? JSON.parse(response.output_text.replace(/[\u0000-\u001F\u007F-\u009F]/g, "")) 
+        : {
+          player: playerName,
+          image: image || "",
+          probability: 0,
+          confidence: 0,
+          nextGame: "No forecast available",
+          explanation: "No forecast available",
+        };
+    } catch (jsonError) {
+      console.error("JSON Parse Error:", jsonError);
+      forecast = {
         player: playerName,
+        image: image || "",
         probability: 0,
         confidence: 0,
         nextGame: "No forecast available",
-        explanation: "No forecast available",
+        explanation: "Error parsing forecast data",
       };
+    }
 
     res.json(forecast);
   } catch (error) {
