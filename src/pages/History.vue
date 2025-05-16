@@ -47,7 +47,7 @@
             </div>
           </div>
           
-          <div class="mt-3 pt-3 border-t border-gray-100">
+          <div class="mt-3 pt-3 border-t border-gray-100 flex justify-between">
             <router-link 
               :to="{ name: 'Probability' }"
               @click="reloadSearch(item)"
@@ -55,6 +55,12 @@
             >
               View Details
             </router-link>
+            <button
+              @click="deleteItem(item.id)"
+              class="text-red-500 hover:text-red-700 text-sm"
+            >
+              Delete
+            </button>
           </div>
         </div>
       </div>
@@ -85,6 +91,14 @@ export default defineComponent({
       }
     };
 
+    const deleteItem = (id: string): void => {
+      // Filter out the item with the matching id
+      history.value = history.value.filter(item => item.id !== id);
+      
+      // Update localStorage with the new history
+      localStorage.setItem('playerProbabilityHistory', JSON.stringify([...history.value].reverse()));
+    };
+
     const formatPercent = (value: number | undefined): string => {
       return typeof value === 'number' ? `${(value * 100).toFixed(1)}%` : 'Unknown';
     };
@@ -111,6 +125,7 @@ export default defineComponent({
     return {
       history,
       clearHistory,
+      deleteItem,
       formatPercent,
       reloadSearch,
       parsedNextGame
