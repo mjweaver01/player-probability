@@ -107,7 +107,7 @@ export default defineComponent({
     );
 
     const parsedTeam = computed(() =>   
-      props.result.team ? marked.parse(props.result.team) : 'Unknown'
+      props.result.team ? marked.parse(props.result.team) : ''
     );
 
     return {
