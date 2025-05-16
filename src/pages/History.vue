@@ -32,6 +32,7 @@
           <div class="flex justify-between">
             <div>
               <h3 class="text-lg font-medium text-indigo-700">{{ item.result.player || item.playerName }}</h3>
+              <p v-html="parsedNextGame(item.result.nextGame)"></p>
               <div class="text-sm text-gray-500">Searched on {{ item.timestamp }}</div>
             </div>
             <div class="flex items-center">
@@ -63,6 +64,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, onMounted, Ref } from 'vue';
+import { marked } from 'marked';
 import { HistoryItem, SavedData } from '../types';
 
 export default defineComponent({
@@ -87,6 +89,10 @@ export default defineComponent({
       return typeof value === 'number' ? `${(value * 100).toFixed(1)}%` : 'Unknown';
     };
 
+    const parsedNextGame = (nextGame: string): string => {
+      return nextGame ? marked.parse(nextGame) : 'Unknown';
+    };
+
     const reloadSearch = (item: HistoryItem): void => {
       // Save the selected item to localStorage so Probability page can load it
       const dataToSave: SavedData = {
@@ -106,7 +112,8 @@ export default defineComponent({
       history,
       clearHistory,
       formatPercent,
-      reloadSearch
+      reloadSearch,
+      parsedNextGame
     };
   }
 });
