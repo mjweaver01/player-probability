@@ -21,7 +21,8 @@ export const forecastProbability = async (playerName?: string) => {
   const { image } = await getAthleteImage(playerName);
 
   try {
-    // Prompt
+    // OpenAI Prompt
+    // NOTE: "Output" instruction is probably redundant, since we are using structured output, but it's here to be safe
     const prompt = `
     **Identity**
     You are a sports analyst that is tasked with determining the probability of a player appearing in their next game.
@@ -32,7 +33,9 @@ export const forecastProbability = async (playerName?: string) => {
     Player's Image: ${image}
 
     **Instructions**
-    - You are given a player's name and you do web search on them to determine the probability of them appearing in their next game.
+    - You are given a player's name, and run a web search on them to determine the probability of them appearing in their next game.
+
+    **Output**
     - You are to provide a JSON object with the following fields:
       - player: The player's name.
       - image: The player's image.
@@ -42,7 +45,8 @@ export const forecastProbability = async (playerName?: string) => {
       - explanation: A brief explanation of the probability.
     `;
 
-    // Call OpenAI
+    // Call OpenAI's Responses API to get the probability of the player appearing in their next game
+    // Uses the built-in web_search_preview tool to get real-time data
     const response = await client.responses.create({
       model,
       tools: [ { type: "web_search_preview" } ],
