@@ -10,7 +10,7 @@
             class="px-3 py-2 rounded hover:bg-indigo-700 transition-colors"
             :class="{ 'bg-indigo-700': $route.path === '/' }"
           >
-            Forecast
+            Probability
           </router-link>
           <router-link 
             to="/history" 
