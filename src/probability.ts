@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { Router } from "express";
 import { zodTextFormat } from "openai/helpers/zod";
-import { client } from "./openai.js";
+import { client, model } from "./openai.js";
 
 const router = Router();
 
@@ -35,7 +35,7 @@ const forecastProbability = async (res: any, playerName?: string) => {
     `;
 
     const response = await client.responses.create({
-      model: "gpt-4o-mini",
+      model,
       tools: [ { type: "web_search_preview" } ],
       tool_choice: "required",
       input: prompt,
