@@ -1,5 +1,6 @@
 export const getAthleteImage = async (playerName: string) => {
   try {
+    // Get the player's image from Wikipedia
     const url = `https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(playerName)}&gsrprop=snippet&prop=imageinfo&iiprop=url&rawcontinue&gsrnamespace=6&format=json`
     const response = await fetch(url);
     const data = await response.json();

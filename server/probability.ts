@@ -17,9 +17,11 @@ export const forecastProbability = async (playerName?: string) => {
     return { error: "Player name is required" };
   }
 
+  // Get the player's image
   const { image } = await getAthleteImage(playerName);
 
   try {
+    // Prompt
     const prompt = `
     **Identity**
     You are a sports analyst that is tasked with determining the probability of a player appearing in their next game.
@@ -40,6 +42,7 @@ export const forecastProbability = async (playerName?: string) => {
       - explanation: A brief explanation of the probability.
     `;
 
+    // Call OpenAI
     const response = await client.responses.create({
       model,
       tools: [ { type: "web_search_preview" } ],
@@ -50,6 +53,7 @@ export const forecastProbability = async (playerName?: string) => {
       },
     });
 
+    // Parse the response
     let forecast;
     try {
       forecast = response.output_text 
