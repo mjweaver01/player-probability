@@ -28,6 +28,7 @@ const forecastProbability = async (res: any, playerName?: string) => {
     **Instructions**
     - You are given a player's name and you do web search on them to determine the probability of them appearing in their next game.
     - You are to provide a JSON object with the following fields:
+      - player: The player's name.
       - probability: The probability of the player appearing in their next game.
       - confidence: The confidence in the probability.
       - nextGame: The next game the player will be playing in.
