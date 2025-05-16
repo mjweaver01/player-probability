@@ -1,6 +1,6 @@
 # Player Probability
 
-A service that forecasts the probability of a player appearing in their next game.
+Forecast the probability of a player appearing in their next game.
 
 ## Setup
 
@@ -24,6 +24,8 @@ A service that forecasts the probability of a player appearing in their next gam
 
 ## Usage
 
+### POST
+
 Send a POST request to `/api/probability` with a JSON body containing the player name:
 
 ```json
@@ -32,4 +34,12 @@ Send a POST request to `/api/probability` with a JSON body containing the player
 }
 ```
 
-The service will return a forecast with the probability of the player appearing in their next game. 
+### GET
+
+Send a GET request to `/api/probability` with the playerName as a query parameter:
+
+```
+api/probability?playerName=LeBron%20James
+```
+
+The service will return a forecast with the probability of the player appearing in their next game, confidence, and an explanation.
