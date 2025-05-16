@@ -86,7 +86,9 @@
                 <div class="bg-white rounded-xl overflow-hidden shadow-lg">
                     <div class="bg-gradient-to-r from-indigo-600 to-blue-500 p-6 text-white">
                         <h2 class="text-2xl font-bold">{{ result.player || playerName }}</h2>
-                        <p class="opacity-90">Next Game: {{ result.nextGame || 'Unknown' }}</p>
+                        <p class="opacity-90" v-if="result.nextGame">
+                            <span v-html="parsedNextGame"></span>
+                        </p>
                     </div>
                     
                     <div class="flex flex-col md:flex-row">
@@ -170,6 +172,9 @@
                     },
                     parsedExplanation() {
                         return this.result.explanation ? marked.parse(this.result.explanation) : 'No explanation available';
+                    },
+                    parsedNextGame() {
+                        return this.result.nextGame ? marked.parse(this.result.nextGame) : 'Unknown';
                     }
                 },
                 methods: {
