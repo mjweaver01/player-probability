@@ -1,13 +1,15 @@
-import OpenAI from "openai";
-import dotenv from "dotenv";
+import OpenAI from 'openai';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
 const apiKey = process.env.OPENAI_API_KEY;
-export const model = process.env.OPENAI_MODEL || "gpt-4o-mini";
+export const model = process.env.OPENAI_MODEL || 'gpt-4o-mini';
 
 if (!apiKey) {
-  console.error("Error: OPENAI_API_KEY environment variable is missing. Please add it to your .env file.");
+  console.error(
+    'Error: OPENAI_API_KEY environment variable is missing. Please add it to your .env file.'
+  );
   process.exit(1);
 }
 

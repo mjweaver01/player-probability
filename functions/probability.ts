@@ -32,7 +32,7 @@ const handler: Handler = async (event, context) => {
       return {
         statusCode: 400,
         headers,
-        body: JSON.stringify({ error: "Player name is required" }),
+        body: JSON.stringify({ error: 'Player name is required' }),
       };
     }
 
@@ -43,13 +43,13 @@ const handler: Handler = async (event, context) => {
       body: JSON.stringify(forecast),
     };
   } catch (error) {
-    console.error("Error:", error);
+    console.error('Error:', error);
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: "An error occurred while processing the request" }),
+      body: JSON.stringify({ error: 'An error occurred while processing the request' }),
     };
   }
 };
 
-export { handler }; 
+export { handler };
