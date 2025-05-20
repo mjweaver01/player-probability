@@ -1,5 +1,6 @@
 export interface PlayerResult {
   player?: string;
+  team?: string;
   probability?: number;
   confidence?: number;
   explanation?: string;

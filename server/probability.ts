@@ -23,7 +23,7 @@ export const forecastProbability = async (playerName?: string) => {
   const { image } = await getAthleteImage(playerName);
 
   try {
-    // OpenAI Prompt
+    // Generate OpenAI Prompt
     const prompt = generatePrompt(playerName, image);
 
     // Call OpenAI's Responses API to get the probability of the player appearing in their next game

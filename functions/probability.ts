@@ -37,6 +37,7 @@ const handler: Handler = async (event, context) => {
     }
 
     const forecast = await forecastProbability(playerName);
+
     return {
       statusCode: 200,
       headers,
@@ -44,6 +45,7 @@ const handler: Handler = async (event, context) => {
     };
   } catch (error) {
     console.error('Error:', error);
+
     return {
       statusCode: 500,
       headers,
